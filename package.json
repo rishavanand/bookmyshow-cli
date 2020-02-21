@@ -1,0 +1,33 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for TS app",
+  "main": "./dist/index.js",
+  "bin": {
+    "bookmyshow": "./dist/index.js"
+  },
+  "scripts": {
+    "start": "node ./dist",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc -p .",
+    "test": "sudo npm i -g && bookmyshow",
+    "refresh": "rm -rf ./node_modules ./package-lock.json && npm install"
+  },
+  "author": "Rishav Anand",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/clear": "^0.1.0",
+    "@types/node": "^13.7.4",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "@types/figlet": "^1.2.0",
+    "chalk": "^3.0.0",
+    "clear": "^0.1.0",
+    "commander": "^4.1.1",
+    "figlet": "^1.2.4",
+    "path": "^0.12.7"
+  }
+}
