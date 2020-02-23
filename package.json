@@ -19,6 +19,7 @@
     "@types/clear": "^0.1.0",
     "@types/node": "^13.7.4",
     "@types/node-fetch": "^2.5.4",
+    "@types/table": "^4.0.7",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2"
@@ -30,6 +31,7 @@
     "commander": "^4.1.1",
     "figlet": "^1.2.4",
     "node-fetch": "^2.6.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "table": "^5.4.6"
   }
 }

@@ -1,11 +1,12 @@
 import fetch from 'node-fetch';
 import { fetchCities } from '../lib';
 import { IRegion, IEventResponse, IEvent, IMovie } from '../entities';
+import { table } from 'table';
 
 /*
 * Function to fetch list of Movies
 */
-export const fetchAllMovies = (city: string): Promise<IMovie[]> => {
+export const fetchAllMovies = (city: string): Promise<string[][]> => {
     return new Promise((resolve, reject) => {
         // Get region code
         fetchCities(city, false, true)
@@ -26,26 +27,20 @@ export const fetchAllMovies = (city: string): Promise<IMovie[]> => {
                 })
             })
             .then(res => <Promise<IEventResponse>>res.json())
-            .then((eventResponse: IEventResponse) => {
+            .then((eventResponse: IEventResponse): string[][] => {
                 const events: IEvent[] = eventResponse.moviesData.BookMyShow.arrEvents;
-                const movies: IMovie[] = events.map((event: IEvent) => {
-                    return <IMovie>{
-                        code: event.ChildEvents[0].EventCode,
-                        name: event.ChildEvents[0].EventName,
-                        synopsis: event.ChildEvents[0].EventSynopsis,
-                        duration: <number><unknown>event.ChildEvents[0].EventDuration,
-                        showDate: event.ChildEvents[0].EventDate,
-                        genre: event.ChildEvents[0].EventGenre,
-                        trailerUrl: event.ChildEvents[0].EventTrailerURL,
-                        language: event.ChildEvents[0].EventLanguage,
-                        status: event.ChildEvents[0].EventStatus,
-                        bookmyshowUrl: event.ChildEvents[0].EventURL
-                    };
+                const movies: string[][] = events.map((event: IEvent) => {
+                    return [
+                        event.ChildEvents[0].EventCode,
+                        event.ChildEvents[0].EventName,
+                        event.ChildEvents[0].EventGenre,
+                        event.ChildEvents[0].EventLanguage,
+                    ]
                 });
-                return movies;
+                return [['Code', 'Name', 'Genre', 'Language']].concat(movies);
             })
-            .then((movies: IMovie[]) => {
-                console.table(movies, ['code', 'name', 'genre', 'language'])
+            .then((movies: string[][]) => {
+                console.log(table(movies))
                 return movies;
             })
             // Resolve
@@ -109,7 +104,28 @@ export const fetchSingleMovie = (city: string, movieId: string): Promise<IMovie>
                 return movie;
             })
             .then((movie: IMovie): IMovie => {
-                console.log(movie);
+
+                const config = {
+                    columns: {
+                        1: {
+                            width: 80,
+                            wrapWord: true
+                        }
+                    }
+                };
+
+                const tableArray: string[][] = [
+                    ['Code', movie.code],
+                    ['Name', movie.name],
+                    ['Synopsis', movie.synopsis],
+                    ['Duration', movie.duration.toString()],
+                    ['Show Date', movie.showDate],
+                    ['Genre', movie.genre],
+                    ['Trailer link', movie.trailerUrl],
+                    ['Language', movie.language],
+                    ['Booking link', movie.bookmyshowUrl]
+                ];
+                console.log(table(tableArray, config));
                 return movie;
             })
             // Resolve

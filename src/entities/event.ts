@@ -64,5 +64,6 @@ export interface IMovie {
     trailerUrl: string,
     language: string,
     status: string,
-    bookmyshowUrl: string
+    bookmyshowUrl: string,
+    table: string[]
 }
