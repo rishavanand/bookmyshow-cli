@@ -1,6 +1,8 @@
 # BookMyShow
 `bookmyshow-cli` is a CLI for listing movies playing in your city via BookMyShow. 
 
+![Alt text](images/bookmyshow-cli.png?raw=true "bookmyshow-cli")
+
 ## Getting Started
 
 ### Installation
