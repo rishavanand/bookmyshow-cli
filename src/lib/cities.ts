@@ -4,7 +4,7 @@ import { IRegion, IRegionMap } from '../entities';
 /*
 * Function to fetch list of cities
 */
-export const fetchCities = (cityName: string): Promise<void> => {
+export const fetchCities = (cityName: string, print: boolean = true, strict: boolean = false): Promise<IRegion[]> => {
     return new Promise((resolve, reject) => {
         // Fetch list
         fetch('https://in.bookmyshow.com/serv/getData/?cmd=GETREGIONS')
@@ -30,17 +30,25 @@ export const fetchCities = (cityName: string): Promise<void> => {
             })
             .then((regions: IRegion[]) => {
                 const cities: IRegion[] | undefined = regions.filter((r) => {
-                    if (r.alias.search(cityName) > -1 || r.code.search(cityName) > -1 || r.name.search(cityName) > -1)
-                        return true;
-                    else
-                        return false;
+                    if (strict) {
+                        if (r.alias === cityName || r.code === cityName || r.name === cityName)
+                            return true;
+                        else
+                            return false;
+                    } else {
+                        if (r.alias.search(cityName) > -1 || r.code.search(cityName) > -1 || r.name.search(cityName) > -1)
+                            return true;
+                        else
+                            return false;
+                    }
                 });
-                if (cities) {
+                if (cities && print) {
                     console.table(cities);
                     console.log('Use the exact code, name, alias in place of `city` while searching for movies.');
-                } else {
+                } else if (!cities) {
                     throw new Error('Oops! City not found');
                 }
+                return cities;
             })
             // Resolve
             .then(resolve)

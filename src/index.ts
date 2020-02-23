@@ -4,8 +4,7 @@ import clear from 'clear';
 import chalk from 'chalk';
 import figlet from 'figlet';
 import program from 'commander';
-import { fetchCities } from './lib';
-import { IRegion } from './entities';
+import { fetchCities, fetchSingleMovie, fetchAllMovies } from './lib';
 const { description, version } = require('../package.json');
 
 clear();
@@ -16,7 +15,7 @@ console.log(
 );
 
 program
-    .command('search <cityName>')
+    .command('cities <city>')
     .description('find your city')
     .action(async (cityName: string) => {
         try {
@@ -27,10 +26,17 @@ program
     })
 
 program
-    .command('movies <city>')
+    .command('movies <city> [movieId]')
     .description('display list of movies currently running in your city')
-    .action(() => {
-        console.log('listing movies ')
+    .action(async (city, movieId) => {
+        try {
+            if (movieId)
+                await fetchSingleMovie(city, movieId);
+            else
+                await fetchAllMovies(city);
+        } catch (err) {
+            console.error(err);
+        }
     })
 
 program
