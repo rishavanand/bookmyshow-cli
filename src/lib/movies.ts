@@ -26,7 +26,9 @@ export const fetchAllMovies = (city: string): Promise<string[][]> => {
                     }
                 })
             })
+            // Extract JSON
             .then(res => <Promise<IEventResponse>>res.json())
+            // Strip needed info
             .then((eventResponse: IEventResponse): string[][] => {
                 const events: IEvent[] = eventResponse.moviesData.BookMyShow.arrEvents;
                 const movies: string[][] = events.map((event: IEvent) => {
@@ -39,6 +41,7 @@ export const fetchAllMovies = (city: string): Promise<string[][]> => {
                 });
                 return [['Code', 'Name', 'Genre', 'Language']].concat(movies);
             })
+            // Print table
             .then((movies: string[][]) => {
                 console.log(table(movies))
                 return movies;
@@ -64,7 +67,7 @@ export const fetchSingleMovie = (city: string, movieId: string): Promise<IMovie>
                 const regionCode: string = region.code;
                 return regionCode;
             })
-            // Fetch movies
+            // Make request
             .then((regionCode) => {
                 return fetch('https://in.bookmyshow.com/serv/getData?cmd=QUICKBOOK&type=MT', {
                     method: 'GET',
@@ -73,7 +76,9 @@ export const fetchSingleMovie = (city: string, movieId: string): Promise<IMovie>
                     }
                 })
             })
+            // Extract JSON
             .then(res => <Promise<IEventResponse>>res.json())
+            // Extract important info
             .then((eventResponse: IEventResponse): IMovie[] => {
                 const events: IEvent[] = eventResponse.moviesData.BookMyShow.arrEvents;
                 const movies: IMovie[] = events.map((event: IEvent) => {
@@ -92,6 +97,7 @@ export const fetchSingleMovie = (city: string, movieId: string): Promise<IMovie>
                 });
                 return movies;
             })
+            // Find movie by code
             .then((movies: IMovie[]): IMovie => {
                 const movie: IMovie | undefined = movies.find((movie: IMovie) => {
                     if (movie.code === movieId)
@@ -103,6 +109,7 @@ export const fetchSingleMovie = (city: string, movieId: string): Promise<IMovie>
                     throw new Error('Movie not found');
                 return movie;
             })
+            // Beautify and print
             .then((movie: IMovie): IMovie => {
 
                 const config = {
