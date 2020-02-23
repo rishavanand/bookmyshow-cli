@@ -20,19 +20,7 @@ program
     .description('find your city')
     .action(async (cityName: string) => {
         try {
-            const res: IRegion[] = await fetchCities();
-            const cities: IRegion[] | undefined = res.filter((r) => {
-                if (r.alias.search(cityName) > -1 || r.code.search(cityName) > -1 || r.name.search(cityName) > -1)
-                    return true;
-                else
-                    return false;
-            });
-            if (cities) {
-                console.table(cities);
-                console.log('Use the exact code, name, alias in place of `cityName` while searching for movies.');
-            } else {
-                throw new Error('Oops! City not found');
-            }
+            await fetchCities(cityName);
         } catch (err) {
             console.error(err);
         }
@@ -40,15 +28,15 @@ program
 
 program
     .command('movies <city>')
-    .description('display lst of movies')
+    .description('display list of movies currently running in your city')
     .action(() => {
         console.log('listing movies ')
     })
 
-// program
-//     .description(description)
-//     .version(version, '-v, --version')
-//     .parse(process.argv)
+program
+    .description(description)
+    .version(version, '-v, --version')
+    .parse(process.argv)
 
 if (!process.argv.slice(2).length) {
     program.outputHelp()
