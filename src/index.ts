@@ -17,9 +17,9 @@ console.log(
 program
     .command('cities <city>')
     .description('find your city')
-    .action(async (cityName: string) => {
+    .action(async (city: string) => {
         try {
-            await fetchCities(cityName);
+            await fetchCities(city);
         } catch (err) {
             console.error(err);
         }
