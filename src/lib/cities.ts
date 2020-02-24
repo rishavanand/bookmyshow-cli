@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import { IRegion, IRegionMap } from '../entities';
+import { table } from 'table';
 
 /*
 * Function to fetch list of cities
@@ -43,7 +44,11 @@ export const fetchCities = (cityName: string, print: boolean = true, strict: boo
                     }
                 });
                 if (cities && print) {
-                    console.table(cities);
+                    let arr: string[][] = cities.map(city => {
+                        return [city.code, city.name, city.name];
+                    });
+                    arr = [['Code', 'Name', 'Alias']].concat(arr);
+                    console.log(table(arr));
                     console.log('Use the exact code, name, alias in place of `city` while searching for movies.');
                 } else if (!cities) {
                     throw new Error('Oops! City not found');

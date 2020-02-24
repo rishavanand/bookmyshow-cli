@@ -19,7 +19,7 @@ program
     .description('find your city')
     .action(async (city: string) => {
         try {
-            await fetchCities(city);
+            await fetchCities(city, true);
         } catch (err) {
             console.error(err);
         }
