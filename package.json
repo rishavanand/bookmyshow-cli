@@ -1,6 +1,6 @@
 {
   "name": "bookmyshow-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CLI for listing movies playing in your city via BookMyShow",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
