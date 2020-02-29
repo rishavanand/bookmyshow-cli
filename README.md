@@ -28,6 +28,8 @@ bookmyshow movies mumbai
 bookmyshow movies mumbai ET00122101
 ```
 
+![Alt text](images/bookmyshow-cli-2.png?raw=true "bookmyshow-cli-2")
+
 ## Contribution
 PRs on Feature Requests, Bug fixes are welcome. Feel free to open an issue and have a discussion first.
 
