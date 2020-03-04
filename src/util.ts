@@ -110,11 +110,15 @@ export const printBars = (data: IBarPrinterParam, displayCost: Boolean = true, p
 
     // Convert object to 
     const labelValueArr: IBarPrinterInput[] = Object.keys(data).map(key => {
-        return {
+        return data[key] ? {
             label: key,
             value: data[key].total ? data[key].total : 0,
             count: data[key].count
-        }
+        } : {
+                label: key,
+                value: 0,
+                count: 0
+            }
     });
 
     // Calculate max value for normalization
