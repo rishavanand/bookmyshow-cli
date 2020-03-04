@@ -9,7 +9,7 @@ program
     .action(async () => {
         try {
 
-            console.log('Welcome to zomato-analytics-cli\n\nThis command line tool will help you fetch your order history from https://www.zomato.com.\n');
+            console.log('Welcome to zomato-analytics-cli\n\nThis command line tool analyze your orders from https://www.zomato.com.\n');
 
             // Initialize new Zomato object
             const zomato: Zomato = new Zomato();
@@ -23,7 +23,10 @@ program
             const otp = await readUserInput('Enter OTP sent on your Zomato registered email address: ', true);
             await zomato.verifyOTP(otp);
 
-            // // Fetch order history
+            // Print wait message
+            console.log('\nPlease wait white we fetch your orders...\n');
+
+            // Fetch order history
             await zomato.fetchOrders();
 
             // Visualize stats
