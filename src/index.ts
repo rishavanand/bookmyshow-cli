@@ -24,7 +24,7 @@ program
             await zomato.verifyOTP(otp);
 
             // Print wait message
-            console.log('\nPlease wait white we fetch your orders...\n');
+            console.log('\nPlease wait while we fetch your orders...');
 
             // Fetch order history
             await zomato.fetchOrders();
